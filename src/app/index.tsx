@@ -1,22 +1,32 @@
-import { StyleSheet, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, StyleSheet, Text } from 'react-native';
+import { GoalGrid } from '../components/GoalGrid';
+import { HeartRateCard } from '../components/HeartRateCard';
+import { MetricCards } from '../components/MetricCards';
 
-export default function Index() {
+export default function ProgressScreen() {
   return (
-    <SafeAreaView style={styles.screen}>
-     <Text>Hola</Text>
-    </SafeAreaView>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <Text style={styles.pageTitle}>Progreso</Text>
+      <GoalGrid />
+      <HeartRateCard />
+      <MetricCards />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1},
-  content: {
+  container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    paddingBottom: 44,
-    gap: 14,
-    justifyContent: 'space-between',
+    backgroundColor: '#FFFFFF',
+  },
+  content: {
+    padding: 24,
+    paddingTop: 60,
+  },
+  pageTitle: {
+    fontSize: 32,
+    fontWeight: '800',
+    color: '#2C49CA',
+    marginBottom: 20,
   },
 });
