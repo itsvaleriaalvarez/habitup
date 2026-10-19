@@ -1,32 +1,34 @@
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import BottomNavigation from '../components/BottomNavigation';
 import { GoalGrid } from '../components/GoalGrid';
 import { HeartRateCard } from '../components/HeartRateCard';
 import { MetricCards } from '../components/MetricCards';
+import { Theme } from '../constants/theme';
 
-export default function ProgressScreen() {
+export default function Index() {
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.pageTitle}>Progreso</Text>
-      <GoalGrid />
-      <HeartRateCard />
-      <MetricCards />
-    </ScrollView>
+    <View style={styles.mainWrapper}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+        <GoalGrid />
+        <HeartRateCard />
+        <MetricCards />
+      </ScrollView>
+      <BottomNavigation />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  mainWrapper: {
+    flex: 1,
+    backgroundColor: Theme.colors.background,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   content: {
-    padding: 24,
-    paddingTop: 60,
-  },
-  pageTitle: {
-    fontSize: 32,
-    fontWeight: '800',
-    color: '#2C49CA',
-    marginBottom: 20,
+    padding: Theme.spacing.md,
+    gap: Theme.spacing.md,
+    paddingBottom: 100, // Espacio para que la barra inferior no tape el contenido
   },
 });
