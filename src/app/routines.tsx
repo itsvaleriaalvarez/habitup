@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+    Modal, Pressable, ScrollView,
+    StyleSheet, Text, TextInput, View
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { theme } from './routineTheme';
-import Button from './RoutineModalButton';
-import RoutineActions from './RoutineActions';
-import RoutineBottomNav from './RoutineBottomNav';
-import RoutineHeader from './RoutineHeader';
-import RoutineSection from './RoutineSection';
-import { RoutineItem } from './RoutineCard';
+
+
+import BottomNavigation from '../components/BottomNavigation';
+import RoutineActions from '../components/RoutineActions';
+import { RoutineItem } from '../components/RoutineCard';
+import RoutineHeader from '../components/RoutineHeader';
+import Button from '../components/RoutineModalButton';
+import RoutineSection from '../components/RoutineSection';
+import { theme } from '../components/routineTheme';
 
 const sections: { id: string; title: string; items: RoutineItem[] }[] = [
   {
@@ -95,7 +100,7 @@ export default function Routines() {
             ))}
           </View>
         </ScrollView>
-        <RoutineBottomNav onCreate={() => setModal('create')} onNavigate={navigate} />
+        <BottomNavigation />
       </View>
 
       <Modal visible={modal !== null} animationType="slide" onRequestClose={() => setModal(null)}>
