@@ -1,8 +1,10 @@
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import {
   Modal, Pressable, ScrollView,
-  StyleSheet, Text, TextInput, View
+  StyleSheet,
+  Switch,
+  Text, TextInput, View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -13,6 +15,14 @@ import RoutineHeader from '../components/RoutineHeader';
 import Button from '../components/RoutineModalButton';
 import RoutineSection from '../components/RoutineSection';
 import { theme } from '../components/routineTheme';
+import {
+  askNotificationPermission,
+  cancelReminder,
+  loadReminder,
+  Reminder,
+  scheduleDailyReminder
+} from '../notifications/notifications';
+import { loadRoutines, Routine, saveRoutine } from '../storage/data';
 
 const sections: { id: string; title: string; items: RoutineItem[] }[] = [
   {
@@ -48,15 +58,53 @@ export default function Routines() {
   const [modal, setModal] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [routineName, setRoutineName] = useState('');
-  const [myRoutines, setMyRoutines] = useState<string[]>([]);
+  const [myRoutines, setMyRoutines] = useState<Routine[]>([]);
+  
+  // Estado para el recordatorio diario
+  const [reminder, setReminder] = useState<Reminder | null>(null);
+  const [reminderEnabled, setReminderEnabled] = useState(false);
+
+  // Carga rutinas y estado de notificaciones cuando la pantalla entra en foco
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchData() {
+        const savedRoutines = await loadRoutines();
+        setMyRoutines(savedRoutines);
+        
+        const savedReminder = await loadReminder();
+        setReminder(savedReminder);
+        setReminderEnabled(savedReminder !== null);
+      }
+      fetchData();
+    }, [])
+  );
+
+  const toggleReminder = async (value: boolean) => {
+    if (value) {
+      const allowed = await askNotificationPermission();
+      if (allowed) {
+        const newReminder = await scheduleDailyReminder(9, 0);
+        setReminder(newReminder);
+        setReminderEnabled(true);
+      } else {
+        setReminderEnabled(false);
+      }
+    } else {
+      await cancelReminder();
+      setReminder(null);
+      setReminderEnabled(false);
+    }
+  };
 
   const selectedSection = sections.find((section) => section.id === modal);
   const selectedItem = sections.flatMap((section) => section.items).find((item) => item.id === selectedId);
 
-  const createRoutine = () => {
+  const createRoutine = async () => {
     const name = routineName.trim();
     if (!name) return;
-    setMyRoutines((current) => [...current, name]);
+    await saveRoutine({ name });
+    const updated = await loadRoutines();
+    setMyRoutines(updated);
     setRoutineName('');
     setModal('mine');
   };
@@ -76,8 +124,25 @@ export default function Routines() {
       <View style={styles.phoneFrame}>
         <ScrollView style={styles.scroll} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           <RoutineHeader />
+
+          {/* Tarjeta interactiva de notificaciones */}
+          <View style={styles.reminderCard}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.reminderTitle}>Recordatorio diario</Text>
+              <Text style={styles.reminderText}>
+                {reminderEnabled && reminder
+                  ? `Te recordamos todos los días a las ${reminder.hour}:${reminder.minute.toString().padStart(2, '0')}`
+                  : 'Recibe un aviso diario para no perder tu rutina'}
+              </Text>
+            </View>
+            <Switch
+              value={reminderEnabled}
+              onValueChange={toggleReminder}
+              trackColor={{ false: '#D1D5DB', true: theme.colors.primary }}
+            />
+          </View>
+
           <View style={styles.actions}>
-            {/* Aquí conectamos la navegación directa a Crear Rutina */}
             <RoutineActions 
               onCreate={() => router.push('/create-routine')} 
               onMyRoutines={() => setModal('mine')} 
@@ -125,7 +190,9 @@ export default function Routines() {
               <View style={styles.modalBlock}>
                 {myRoutines.length === 0 ? (
                   <Text style={styles.body}>Aún no creaste ninguna rutina.</Text>
-                ) : myRoutines.map((name, index) => <Text key={`${index}-${name}`} style={styles.body}>{name}</Text>)}
+                ) : myRoutines.map((routine) => (
+                  <Text key={routine.id} style={styles.body}>• {routine.name}</Text>
+                ))}
                 <Button label="Crear rutina" onPress={() => {
                   setModal(null);
                   router.push('/create-routine');
@@ -165,6 +232,17 @@ const styles = StyleSheet.create({
   },
   scroll: { flex: 1 },
   content: { paddingTop: theme.layout.topPadding, paddingBottom: theme.spacing.md },
+  reminderCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: theme.spacing.md,
+    borderRadius: theme.radius.md,
+    backgroundColor: theme.colors.primarySoft,
+    marginTop: theme.spacing.md,
+    gap: 12,
+  },
+  reminderTitle: { fontSize: 16, fontWeight: 'bold', color: theme.colors.primary },
+  reminderText: { fontSize: 13, color: theme.colors.textMuted },
   actions: { marginTop: theme.layout.headerToActions },
   sections: { marginTop: theme.layout.actionsToSections, gap: theme.layout.sectionGap },
   modalScreen: { flex: 1, backgroundColor: theme.colors.background, padding: theme.spacing.xl },
