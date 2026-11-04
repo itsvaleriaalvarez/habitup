@@ -1,5 +1,5 @@
-import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { router } from 'expo-router';
+import { useState } from 'react';
 import {
   Modal, Pressable, ScrollView,
   StyleSheet,
@@ -15,14 +15,6 @@ import RoutineHeader from '../components/RoutineHeader';
 import Button from '../components/RoutineModalButton';
 import RoutineSection from '../components/RoutineSection';
 import { theme } from '../components/routineTheme';
-import {
-  askNotificationPermission,
-  cancelReminder,
-  loadReminder,
-  Reminder,
-  scheduleDailyReminder
-} from '../notifications/notifications';
-import { loadRoutines, Routine, saveRoutine } from '../storage/data';
 
 const sections: { id: string; title: string; items: RoutineItem[] }[] = [
   {
@@ -58,43 +50,7 @@ export default function Routines() {
   const [modal, setModal] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [routineName, setRoutineName] = useState('');
-  const [myRoutines, setMyRoutines] = useState<Routine[]>([]);
-  
-  // Estado para el recordatorio diario
-  const [reminder, setReminder] = useState<Reminder | null>(null);
-  const [reminderEnabled, setReminderEnabled] = useState(false);
-
-  // Carga rutinas y estado de notificaciones cuando la pantalla entra en foco
-  useFocusEffect(
-    useCallback(() => {
-      async function fetchData() {
-        const savedRoutines = await loadRoutines();
-        setMyRoutines(savedRoutines);
-        
-        const savedReminder = await loadReminder();
-        setReminder(savedReminder);
-        setReminderEnabled(savedReminder !== null);
-      }
-      fetchData();
-    }, [])
-  );
-
-  const toggleReminder = async (value: boolean) => {
-    if (value) {
-      const allowed = await askNotificationPermission();
-      if (allowed) {
-        const newReminder = await scheduleDailyReminder(9, 0);
-        setReminder(newReminder);
-        setReminderEnabled(true);
-      } else {
-        setReminderEnabled(false);
-      }
-    } else {
-      await cancelReminder();
-      setReminder(null);
-      setReminderEnabled(false);
-    }
-  };
+  const [myRoutines, setMyRoutines] = useState<string[]>([]);
 
   const selectedSection = sections.find((section) => section.id === modal);
   const selectedItem = sections.flatMap((section) => section.items).find((item) => item.id === selectedId);

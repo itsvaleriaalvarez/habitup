@@ -1,8 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { GoalGrid } from '../../components/GoalGrid';
-import { HeartRateCard } from '../../components/HeartRateCard';
-import { MetricCards } from '../../components/MetricCards';
-import { Theme } from '../../constants/theme';
+import { GoalGrid } from '../components/GoalGrid';
+import { HeartRateCard } from '../components/HeartRateCard';
+import { MetricCards } from '../components/MetricCards';
 
 export default function Index() {
   return (
@@ -19,14 +18,14 @@ export default function Index() {
 const styles = StyleSheet.create({
   mainWrapper: {
     flex: 1,
-    backgroundColor: Theme.colors.background,
+    backgroundColor: '#000000',
   },
   container: {
     flex: 1,
   },
   content: {
-    padding: Theme.spacing.md,
-    gap: Theme.spacing.md,
+    padding: 16,
+    gap: 16,
     paddingBottom: 100,
   },
 });
