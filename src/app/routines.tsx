@@ -1,5 +1,5 @@
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import {
   Modal, Pressable, ScrollView,
   StyleSheet, Text, TextInput, View
@@ -13,6 +13,7 @@ import RoutineHeader from '../components/RoutineHeader';
 import Button from '../components/RoutineModalButton';
 import RoutineSection from '../components/RoutineSection';
 import { theme } from '../components/routineTheme';
+import { loadRoutines, Routine, saveRoutine } from '../storage/data';
 
 const sections: { id: string; title: string; items: RoutineItem[] }[] = [
   {
@@ -48,15 +49,28 @@ export default function Routines() {
   const [modal, setModal] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [routineName, setRoutineName] = useState('');
-  const [myRoutines, setMyRoutines] = useState<string[]>([]);
+  const [myRoutines, setMyRoutines] = useState<Routine[]>([]);
+
+  // Carga las rutinas de AsyncStorage cada vez que la pantalla entra en foco
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchRoutines() {
+        const saved = await loadRoutines();
+        setMyRoutines(saved);
+      }
+      fetchRoutines();
+    }, [])
+  );
 
   const selectedSection = sections.find((section) => section.id === modal);
   const selectedItem = sections.flatMap((section) => section.items).find((item) => item.id === selectedId);
 
-  const createRoutine = () => {
+  const createRoutine = async () => {
     const name = routineName.trim();
     if (!name) return;
-    setMyRoutines((current) => [...current, name]);
+    await saveRoutine({ name });
+    const updated = await loadRoutines();
+    setMyRoutines(updated);
     setRoutineName('');
     setModal('mine');
   };
@@ -77,7 +91,6 @@ export default function Routines() {
         <ScrollView style={styles.scroll} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           <RoutineHeader />
           <View style={styles.actions}>
-            {/* Aquí conectamos la navegación directa a Crear Rutina */}
             <RoutineActions 
               onCreate={() => router.push('/create-routine')} 
               onMyRoutines={() => setModal('mine')} 
@@ -125,7 +138,9 @@ export default function Routines() {
               <View style={styles.modalBlock}>
                 {myRoutines.length === 0 ? (
                   <Text style={styles.body}>Aún no creaste ninguna rutina.</Text>
-                ) : myRoutines.map((name, index) => <Text key={`${index}-${name}`} style={styles.body}>{name}</Text>)}
+                ) : myRoutines.map((routine) => (
+                  <Text key={routine.id} style={styles.body}>• {routine.name}</Text>
+                ))}
                 <Button label="Crear rutina" onPress={() => {
                   setModal(null);
                   router.push('/create-routine');
