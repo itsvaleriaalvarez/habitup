@@ -1,9 +1,8 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
-import BottomNavigation from '../components/BottomNavigation';
-import { GoalGrid } from '../components/GoalGrid';
-import { HeartRateCard } from '../components/HeartRateCard';
-import { MetricCards } from '../components/MetricCards';
-import { Theme } from '../constants/theme';
+import { GoalGrid } from '../../components/GoalGrid';
+import { HeartRateCard } from '../../components/HeartRateCard';
+import { MetricCards } from '../../components/MetricCards';
+import { Theme } from '../../constants/theme';
 
 export default function Index() {
   return (
@@ -13,7 +12,6 @@ export default function Index() {
         <HeartRateCard />
         <MetricCards />
       </ScrollView>
-      <BottomNavigation />
     </View>
   );
 }
@@ -29,6 +27,6 @@ const styles = StyleSheet.create({
   content: {
     padding: Theme.spacing.md,
     gap: Theme.spacing.md,
-    paddingBottom: 100, // Espacio para que la barra inferior no tape el contenido
+    paddingBottom: 100,
   },
 });

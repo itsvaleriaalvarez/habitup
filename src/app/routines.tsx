@@ -1,10 +1,10 @@
+import { router } from 'expo-router';
 import { useState } from 'react';
 import {
-    Modal, Pressable, ScrollView,
-    StyleSheet, Text, TextInput, View
+  Modal, Pressable, ScrollView,
+  StyleSheet, Text, TextInput, View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 
 import BottomNavigation from '../components/BottomNavigation';
 import RoutineActions from '../components/RoutineActions';
@@ -66,14 +66,6 @@ export default function Routines() {
     setModal('detail');
   };
 
-  const navigate = (screen: string) => {
-    if (screen === 'home') {
-      setModal(null);
-      return;
-    }
-    setModal(screen);
-  };
-
   const modalTitle = modal === 'create' ? 'Crear rutina'
     : modal === 'mine' ? 'Mis rutinas'
     : modal === 'detail' ? selectedItem?.title ?? 'Rutina'
@@ -85,7 +77,11 @@ export default function Routines() {
         <ScrollView style={styles.scroll} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           <RoutineHeader />
           <View style={styles.actions}>
-            <RoutineActions onCreate={() => setModal('create')} onMyRoutines={() => setModal('mine')} />
+            {/* Aquí conectamos la navegación directa a Crear Rutina */}
+            <RoutineActions 
+              onCreate={() => router.push('/create-routine')} 
+              onMyRoutines={() => setModal('mine')} 
+            />
           </View>
           <View style={styles.sections}>
             {sections.map((section) => (
@@ -129,8 +125,11 @@ export default function Routines() {
               <View style={styles.modalBlock}>
                 {myRoutines.length === 0 ? (
                   <Text style={styles.body}>Aún no creaste ninguna rutina.</Text>
-                ) : myRoutines.map((name, index) => <Text key={`${index}-${name}`} style={styles.body}>• {name}</Text>)}
-                <Button label="Crear rutina" onPress={() => setModal('create')} />
+                ) : myRoutines.map((name, index) => <Text key={`${index}-${name}`} style={styles.body}>{name}</Text>)}
+                <Button label="Crear rutina" onPress={() => {
+                  setModal(null);
+                  router.push('/create-routine');
+                }} />
               </View>
             )}
             {selectedSection && selectedSection.items.map((item) => (
