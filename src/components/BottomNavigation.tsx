@@ -2,11 +2,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { usePathname, useRouter } from 'expo-router';
 import {
-    Alert,
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
+  Alert,
+  Pressable,
+  StyleSheet,
+  View,
 } from 'react-native';
 
 const BLUE = '#0047D5';
@@ -64,15 +63,9 @@ export default function BottomNavigation() {
       >
         <Ionicons
           name={active ? item.activeIcon : item.icon}
-          size={24}
+          size={25}
           color={WHITE}
         />
-
-        <Text style={[styles.label, active && styles.activeLabel]}>
-          {item.label}
-        </Text>
-
-        {active && <View style={styles.activeIndicator} />}
       </Pressable>
     );
   };
@@ -115,36 +108,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: BLUE,
     borderRadius: 28,
-    paddingTop: 12,
-    paddingBottom: 10,
-    paddingHorizontal: 6,
-    shadowColor: '#16336B',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.18,
-    shadowRadius: 12,
-    elevation: 8,
+    minHeight: 52,
+    paddingHorizontal: 10,
   },
   item: {
     flex: 1,
-    minWidth: 0,
+    height: 52,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 3,
-  },
-  label: {
-    color: WHITE,
-    fontSize: 11,
-    fontWeight: '500',
-  },
-  activeLabel: {
-    fontWeight: '800',
-  },
-  activeIndicator: {
-    width: 16,
-    height: 3,
-    borderRadius: 2,
-    backgroundColor: WHITE,
-    marginTop: 1,
   },
   addButton: {
     width: 54,
@@ -154,7 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 2,
-    marginTop: -28,
+    marginTop: -24,
     borderWidth: 4,
     borderColor: WHITE,
     elevation: 5,
