@@ -1,6 +1,7 @@
 
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
     Alert,
@@ -82,6 +83,37 @@ const programFields = [
 
 export default function ProfileSections() {
   const [expanded, setExpanded] = useState<number | null>(0);
+  const router = useRouter();
+
+  const openHealthOption = (option: string) => {
+    if (option === 'Historial de progreso') {
+      router.push({
+        pathname: '/habit-evolution',
+        params: { period: 'Mes' },
+      });
+      return;
+    }
+
+    if (option === 'Evolución de hábitos') {
+      router.push({
+        pathname: '/habit-evolution',
+        params: { period: 'Semana' },
+      });
+      return;
+    }
+
+    const period =
+      option === 'Estadísticas mensuales'
+        ? 'Mes'
+        : option === 'Estadísticas semanales'
+          ? 'Semana'
+          : 'Resumen';
+
+    router.push({
+      pathname: '/health-report',
+      params: { period },
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -122,6 +154,23 @@ export default function ProfileSections() {
                     (index === 1 && accountFields.includes(option)) ||
                     (index === 2 && lifestyleFields.includes(option)) ||
                     (index === 3 && programFields.includes(option));
+
+                  if (index === 4) {
+                    return (
+                      <Pressable
+                        key={option}
+                        style={styles.option}
+                        onPress={() => openHealthOption(option)}
+                      >
+                        <Text style={styles.optionText}>{option}</Text>
+                        <Ionicons
+                          name="chevron-forward"
+                          size={19}
+                          color="#0047D5"
+                        />
+                      </Pressable>
+                    );
+                  }
 
                   if (isTextField) {
                     return (
