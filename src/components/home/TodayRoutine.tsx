@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 const BLUE = '#0047D5';
+const WHITE = '#FFFFFF';
 
 export default function TodayRoutine() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function TodayRoutine() {
           onPress={() => router.push('/routines' as never)}
         >
           <Text style={styles.buttonText}>Comenzar</Text>
-          <Ionicons name="arrow-forward" size={15} color="#FFFFFF" />
+          <Ionicons name="arrow-forward" size={15} color={WHITE} />
         </Pressable>
       </View>
     </LinearGradient>
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1.2,
   },
   title: {
-    color: BLUE,
+    color: WHITE,
     fontSize: 21,
     fontWeight: '900',
     marginTop: 4,
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: WHITE,
     fontSize: 11,
     fontWeight: '800',
   },

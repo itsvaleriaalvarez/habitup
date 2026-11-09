@@ -7,13 +7,14 @@ import Svg, { Circle, Path } from 'react-native-svg';
 
 const BLUE = '#0047D5';
 const GREEN = '#55F542';
+const WHITE = '#FFFFFF';
 
 export default function ProgressCard() {
   const router = useRouter();
 
   return (
     <LinearGradient
-      colors={['#8EAAEE', '#FFFFFF']}
+      colors={['#8EAAEE', '#0047D5']}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={styles.card}
@@ -28,10 +29,10 @@ export default function ProgressCard() {
 
         <Pressable
           style={styles.button}
-          onPress={() => router.push('/ProgressScreen' as never)}
+          onPress={() => router.push('/progress' as never)}
         >
           <Text style={styles.buttonText}>Ver progreso</Text>
-          <Ionicons name="arrow-forward" size={15} color="#FFFFFF" />
+          <Ionicons name="arrow-forward" size={15} color={WHITE} />
         </Pressable>
       </View>
 
@@ -45,7 +46,6 @@ export default function ProgressCard() {
             strokeWidth="4"
             fill="none"
           />
-
           <Path
             d="M 50 11 A 39 39 0 1 1 12.9 62.1"
             stroke={GREEN}
@@ -78,19 +78,19 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   label: {
-    color: BLUE,
+    color: WHITE,
     fontSize: 11,
     fontWeight: '700',
     letterSpacing: 1,
   },
   title: {
-    color: BLUE,
+    color: WHITE,
     fontSize: 23,
     fontWeight: '900',
     marginTop: 5,
   },
   description: {
-    color: BLUE,
+    color: WHITE,
     fontSize: 12,
     lineHeight: 16,
     marginTop: 5,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: WHITE,
     fontSize: 11,
     fontWeight: '700',
   },
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   percentage: {
-    color: BLUE,
+    color: WHITE,
     fontSize: 23,
     fontWeight: '900',
   },
