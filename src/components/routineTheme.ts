@@ -1,11 +1,14 @@
-// Tokens locales de la pantalla Rutinas. No modifica el Theme compartido.
+
+// Local design tokens for the Routines screen.
+// Does not modify the shared Theme.
+
 import { Theme } from '../constants/theme';
 
 export const theme = {
   colors: {
     background: Theme.colors.cardBackground,
     card: Theme.colors.cardBackground,
-    primary: '#0753B9', // azul del Figma (aproximado desde captura)
+    primary: '#0753B9',
     primarySoft: '#C4DAF6',
     cardBorder: '#82A7EB',
     navigation: '#0755D3',
@@ -24,7 +27,7 @@ export const theme = {
     caption: 10,
   },
   layout: {
-    maxWidth: 360,
+    maxWidth: undefined,
     pagePadding: 20,
     topPadding: 50,
     headerToActions: 27,
