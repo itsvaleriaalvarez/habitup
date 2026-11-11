@@ -1,58 +1,98 @@
-# Welcome to your Expo app 👋
+# HabitUp 💪
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Descripción del proyecto
 
-## Get started
+HabitUp es una aplicación móvil desarrollada con React Native y Expo, enfocada en ayudar a las personas a construir hábitos saludables, organizar sus rutinas y realizar un seguimiento de su progreso.
 
-1. Install dependencies
+Su propósito es fomentar la constancia y mejorar el bienestar personal mediante una experiencia sencilla e intuitiva.
 
-   ```bash
-   npm install
-   ```
+## Funcionalidades principales
 
-2. Start the app
+La aplicación cuenta con cuatro secciones principales:
 
-   ```bash
-   npx expo start
-   ```
+### 1. Inicio
+- Visualización del progreso y cumplimiento de objetivos.
+- Estadísticas semanales de actividad.
+- Resumen de la rutina del día.
+- Seguimiento de hábitos diarios.
 
-In the output, you'll find options to open the app in a
+### 2. Rutinas
+- Visualización y organización de rutinas.
+- Gestión de actividades relacionadas con los hábitos.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 3. Progreso
+- Visualización de objetivos.
+- Seguimiento de actividad y estadísticas.
+- Indicadores del progreso del usuario.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 4. Perfil
+- Información personal y datos de la cuenta.
+- Ajustes de estilo de vida.
+- Programa personalizado.
+- Informe de salud.
+- Evolución de hábitos.
 
-## Get a fresh project
+## Tecnologías utilizadas
 
-When you're ready, run:
+- React Native
+- Expo
+- TypeScript
+- Expo Router
+- Git y GitHub
+
+## Instalación y ejecución
+
+Para ejecutar el proyecto localmente:
+
+**1. Clonar el repositorio**
 
 ```bash
-npm run reset-project
+git clone https://github.com/itsvaleriaalvarez/habitup.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+**2. Ingresar a la carpeta**
 
-### Other setup steps
+```bash
+cd habitup
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+**3. Instalar las dependencias**
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+**4. Iniciar la aplicación**
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start
+```
 
-## Join the community
+## Estructura del proyecto
 
-Join our community of developers creating universal apps.
+```text
+habitup/
+├── assets/
+├── src/
+│   ├── app/
+│   ├── components/
+│   │   ├── home/
+│   │   └── profile/
+│   └── constants/
+├── package.json
+├── package-lock.json
+├── app.json
+└── README.md
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Navegación
 
-# Pantalla de Progreso completada
+HabitUp utiliza Expo Router para gestionar la navegación entre las diferentes pantallas de la aplicación.
+
+## Trabajo colaborativo
+
+El proyecto se desarrolla de manera colaborativa mediante Git y GitHub. Cada integrante trabaja en su propia rama y los cambios se integran a la rama principal `main` mediante Pull Requests.
+
+## Equipo de desarrollo
+
+Proyecto académico desarrollado de manera colaborativa.
