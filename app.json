@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "habitup",
+    "name": "HabitUp",
     "slug": "habitup",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,6 +11,7 @@
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.equipo.habitup",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -37,6 +38,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "fb0b2a25-5ff8-4d88-8424-194825954646"
+      }
     }
   }
 }
