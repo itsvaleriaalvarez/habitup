@@ -1,6 +1,7 @@
 
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Link } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { weeklyStats } from '../../constants/homeData';
 
@@ -11,7 +12,11 @@ export default function WeeklyStats() {
     <View style={styles.container}>
       <View style={styles.heading}>
         <Text style={styles.title}>Esta semana</Text>
+        <Link href="/health-report">
         <Text style={styles.link}>Ver todo</Text>
+        </Link>
+        
+
       </View>
 
       <View style={styles.cards}>
