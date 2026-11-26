@@ -12,6 +12,10 @@ const BLUE = '#0047D5';
 const ORANGE = '#F18701';
 const WHITE = '#FFFFFF';
 
+type Props = {
+  onAdd?: () => void;
+};
+
 const items = [
   {
     label: 'Inicio',
@@ -39,7 +43,7 @@ const items = [
   },
 ];
 
-export default function BottomNavigation() {
+export default function BottomNavigation({ onAdd }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -77,13 +81,12 @@ export default function BottomNavigation() {
 
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Agregar"
+          accessibilityLabel="Agregar hábito"
           style={styles.addButton}
           onPress={() =>
-            Alert.alert(
-              'Agregar',
-              'Aquí conectaremos la acción de agregar.'
-            )
+            onAdd
+              ? onAdd()
+              : Alert.alert('Agregar', 'Esta opción está disponible en Inicio.')
           }
         >
           <Ionicons name="add" size={34} color={WHITE} />
